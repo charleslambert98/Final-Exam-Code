@@ -1,5 +1,4 @@
 package pkgCore;
-
 import org.apache.poi.ss.formula.functions.FinanceLib;
 
 public class Retirement {
