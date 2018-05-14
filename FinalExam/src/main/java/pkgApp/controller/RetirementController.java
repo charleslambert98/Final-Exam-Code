@@ -96,7 +96,6 @@ public class RetirementController implements Initializable {
 			});
 		}
 
-		//
 		// TODO: Validate Working Annual Return %, accept only numbers and decimals
 		// TODO: Validate Years retired, accepted only decimals
 		// TODO: Validate Retired Annual Return %, accept only numbers and deciamls
@@ -116,6 +115,32 @@ public class RetirementController implements Initializable {
 		txtYearsToWork.clear();
 		txtYearsToWork.setDisable(false);
 
+		txtSaveEachMonth.clear();
+		txtSaveEachMonth.setDisable(true);
+
+		txtYearsToWork.clear();
+		txtYearsToWork.setDisable(false);
+
+		txtAnnualReturnWorking.clear();
+		txtAnnualReturnWorking.setDisable(false);
+
+		txtWhatYouNeedToSave.clear();
+		txtWhatYouNeedToSave.setDisable(true);
+
+		txtYearsRetired.clear();
+		txtYearsRetired.setDisable(false);
+
+		txtAnnualReturnRetired.clear();
+		txtAnnualReturnRetired.setDisable(false);
+
+		txtRequiredIncome.clear();
+		txtRequiredIncome.setDisable(false);
+
+		txtMonthlySSI.clear();
+		txtMonthlySSI.setDisable(false);
+
+
+
 		// TODO: Clear, enable the rest of the input controls. Hint! You already have a
 		// HashMap of all the input controls....!!!!
 	}
@@ -128,8 +153,19 @@ public class RetirementController implements Initializable {
 		txtSaveEachMonth.setDisable(false);
 		txtWhatYouNeedToSave.setDisable(false);
 
+		txtWhatYouNeedToSave.setText(Retirement.PV());
+		txtSaveEachMonth.setText(Retirement.PMT());
 		// TODO: Calculate txtWhatYouNeedToSave value...
 		// TODO: Then calculate txtSaveEachMonth, using amount from txtWhatYouNeedToSave
 		// as input
 	}
+
+	/*public void intErrorCheck(TextField field){
+		try{
+			Integer.parseInt(field.toString());
+		}
+		catch (Exception e) {
+			field.setText("");
+		}
+	} */
 }
