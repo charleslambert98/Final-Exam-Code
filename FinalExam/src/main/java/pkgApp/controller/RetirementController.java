@@ -155,14 +155,11 @@ public class RetirementController implements Initializable {
 
 		Retirement ret = new Retirement(YearsToWork, AnnualReturnWorking, YearsRetired, AnnualReturnRetired, RequiredIncome, MonthlySSI);
 
-		txtWhatYouNeedToSave.setText(Double.toString(ret.TotalAmountToSave()));
 		txtSaveEachMonth.setText(Double.toString(ret.MonthlySavings()));
-		// TODO: Calculate txtWhatYouNeedToSave value...
-		// TODO: Then calculate txtSaveEachMonth, using amount from txtWhatYouNeedToSave
+		txtWhatYouNeedToSave.setText(Double.toString(ret.TotalAmountToSave()));
 		// as input
 	}
-
-	//[0-9](\.[0-9]{1,2}){0,1}|10(\.0{1,2}){0,1}
+	
 	private void percentValidation(TextField field){
 		field.focusedProperty().addListener((arg0, oldValue, newValue) -> {
 			if(!newValue){

@@ -23,16 +23,15 @@ public class Retirement {
 
 	public double MonthlySavings() {
 
-		//TODO: Calculate AmountToSave
-		double pmt = Math.round(Math.abs(Retirement.PMT(dAnnualReturnRetired/12, iYearsRetired*12, this.TotalAmountToSave(),0,false))*100.0)/100.0;
+		double pv = TotalAmountToSave();
+		double pmt = Math.round(Math.abs(Retirement.PMT(dAnnualReturnRetired/12, iYearsRetired*12, pv,0,false))*100.0)/100.0;
 		return pmt;
 	}
 
 	public double TotalAmountToSave() {
-		
-		//TODO: Calculate the Total Amount Requried to save
+
 		double pv = Math.round(Math.abs(Retirement.PV(dAnnualReturnRetired/12, iYearsRetired*12, dRequiredIncome-dMonthlySSI, 0, false)*100.0)/100.0);
-		//	Hint: Here's how to round a number: pv = Math.round(pv * 100.0) / 100.0;
+
 		return pv;
 	}
 
