@@ -83,7 +83,7 @@ public class RetirementController implements Initializable {
 			txtField.focusedProperty().addListener(new ChangeListener<Boolean>() {
 				@Override
 				public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue,
-						Boolean newPropertyValue) {
+									Boolean newPropertyValue) {
 					// If newPropertyValue = true, then the field HAS FOCUS
 					// If newPropertyValue = false, then field HAS LOST FOCUS
 					if (!newPropertyValue) {
@@ -96,12 +96,16 @@ public class RetirementController implements Initializable {
 			});
 		}
 
-		// TODO: Validate Working Annual Return %, accept only numbers and decimals
-		// TODO: Validate Years retired, accepted only decimals
-		// TODO: Validate Retired Annual Return %, accept only numbers and deciamls
-		// TODO: Validate Required Income, accept only decimals
-		// TODO: Validate Monthly SSI, accept only decimals
+		intWorkValidation(txtYearsToWork);
+		percentValidation(txtAnnualReturnWorking);
+		intRetiredValidation(txtYearsRetired);
+		percentValidation(txtAnnualReturnRetired);
+		intReqInValidation(txtRequiredIncome);
+		intSSIValidation(txtMonthlySSI);
+
 	}
+
+
 
 	@FXML
 	public void btnClear(ActionEvent event) {
@@ -109,15 +113,9 @@ public class RetirementController implements Initializable {
 
 		// disable read-only controls
 		txtSaveEachMonth.setDisable(true);
-		txtWhatYouNeedToSave.setDisable(true);
+		txtWhatYouNeedToSave.clear();
 
 		// Clear, enable txtYearsToWork
-		txtYearsToWork.clear();
-		txtYearsToWork.setDisable(false);
-
-		txtSaveEachMonth.clear();
-		txtSaveEachMonth.setDisable(true);
-
 		txtYearsToWork.clear();
 		txtYearsToWork.setDisable(false);
 
@@ -139,33 +137,85 @@ public class RetirementController implements Initializable {
 		txtMonthlySSI.clear();
 		txtMonthlySSI.setDisable(false);
 
-
-
-		// TODO: Clear, enable the rest of the input controls. Hint! You already have a
-		// HashMap of all the input controls....!!!!
 	}
 
 	@FXML
 	public void btnCalculate() {
 
 		System.out.println("calculating");
+		int YearsToWork = Integer.parseInt(txtYearsToWork.getText());
+		double AnnualReturnWorking = Double.parseDouble(txtAnnualReturnWorking.getText());
+		int YearsRetired = Integer.parseInt(txtYearsRetired.getText());
+		double AnnualReturnRetired= Double.parseDouble(txtAnnualReturnRetired.getText());
+		int RequiredIncome= Integer.parseInt(txtRequiredIncome.getText());
+		int MonthlySSI= Integer.parseInt(txtMonthlySSI.getText());
 
 		txtSaveEachMonth.setDisable(false);
 		txtWhatYouNeedToSave.setDisable(false);
 
-		txtWhatYouNeedToSave.setText(Retirement.PV());
-		txtSaveEachMonth.setText(Retirement.PMT());
+		Retirement ret = new Retirement(YearsToWork, AnnualReturnWorking, YearsRetired, AnnualReturnRetired, RequiredIncome, MonthlySSI);
+
+		txtWhatYouNeedToSave.setText(Double.toString(ret.TotalAmountToSave()));
+		txtSaveEachMonth.setText(Double.toString(ret.MonthlySavings()));
 		// TODO: Calculate txtWhatYouNeedToSave value...
 		// TODO: Then calculate txtSaveEachMonth, using amount from txtWhatYouNeedToSave
 		// as input
 	}
 
-	/*public void intErrorCheck(TextField field){
-		try{
-			Integer.parseInt(field.toString());
-		}
-		catch (Exception e) {
-			field.setText("");
-		}
-	} */
+	//[0-9](\.[0-9]{1,2}){0,1}|10(\.0{1,2}){0,1}
+	private void percentValidation(TextField field){
+		field.focusedProperty().addListener((arg0, oldValue, newValue) -> {
+			if(!newValue){
+				if(!field.getText().matches("[0]\\.[0][1-9]|[0]\\.[1][0]")){
+					field.setText("");
+					field.requestFocus();
+				}
+			}
+		});
+	}
+
+	public void intWorkValidation(TextField field){
+		field.focusedProperty().addListener((arg0, oldValue, newValue) -> {
+			if(!newValue){
+				if(!field.getText().matches("[0-9]|[0-3][0-9]|4[0]")){
+					field.setText("");
+					field.requestFocus();
+				}
+			}
+		});
+	}
+
+	public void intReqInValidation(TextField field){
+		field.focusedProperty().addListener((arg0, oldValue, newValue) -> {
+			if(!newValue){
+				if(!field.getText().matches("[2][6-9][4-9][2-9]|[3-9][0-9][0-9][0-9]|10[0][0][0]")){
+					field.setText("");
+					field.requestFocus();
+				}
+			}
+		});
+	}
+
+	public void intSSIValidation(TextField field){
+		field.focusedProperty().addListener((arg0, oldValue, newValue) -> {
+			if(!newValue){
+				if(!field.getText().matches("[0-9]|[0-9][0-9]|[0-9][0-9][0-9]|[0-2][0-6][0-4][0-2]")){
+					field.setText("");
+					field.requestFocus();
+				}
+			}
+		});
+	}
+
+	public void intRetiredValidation(TextField field){
+		field.focusedProperty().addListener((arg0, oldValue, newValue) -> {
+			if(!newValue){
+				if(!field.getText().matches("[0-9]|[0-1][0-9]|2[0]")){
+					field.setText("");
+					field.requestFocus();
+				}
+			}
+		});
+	}
+
 }
